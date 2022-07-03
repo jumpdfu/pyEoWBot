@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.font as tkFont
+from tkinter.filedialog import asksaveasfile, askopenfilename
 import keyboard
 import eowbot as bot
 
@@ -88,8 +89,15 @@ class App:
 
     @staticmethod
     def btn_rec_start():
+        mem, memProcess = bot.game_connect()
+        currentMap = str(mem.read_int(memProcess, bot.cur_mapAddr))
+        f = asksaveasfile(initialfile='.' + currentMap + '.json',
+                          defaultextension="." + currentMap + ".json",
+                          filetypes=[("JSON Track Files", "*.*.json"),
+                                     ("JSON Track Files", "*.*.json")])
         print("Запись начата")
-        bot.track_rec('Paladin Temple to Blade Room.json')
+        print(f.name)
+        bot.track_rec(f.name)
 
     @staticmethod
     def btn_rec_pause(i=None):
@@ -107,12 +115,19 @@ class App:
 
     @staticmethod
     def btn_track_select(self=None):
-        print("Выбрать трек"+self)
+        print("Выбрать трек" + self)
 
     @staticmethod
     def btn_track_play():
+        mem, memProcess = bot.game_connect()
+        currentMap = str(mem.read_int(memProcess, bot.cur_mapAddr))
+        file = askopenfilename(initialfile='.' + currentMap + '.json',
+                               defaultextension="." + currentMap + ".json",
+                               filetypes=[("JSON Track Files", "*."+currentMap+".json"),
+                                          ("JSON Track Files", "*."+currentMap+".json")])
         print("Воспроизведен трек")
-        bot.track_go("XO.json")
+        print(file)
+        bot.track_go(file)
 
     @staticmethod
     def btn_track_pause(i=None):

@@ -52,8 +52,8 @@ def scan_map(search=None):
             X += 1
             Y = -10
 
-        # Направление в котором смотрит персонаж.
         objHP = mem.read_int(memProcess, mat + 4)
+        # Направление в котором смотрит персонаж.
         direction = mem.read_int(memProcess, mat + 40)
         isee_id = mem.read_int(memProcess, mat)
         if isee_id == 0:
@@ -141,6 +141,8 @@ def track_go(file_path='json_data.json'):
                 # time.sleep(0.4)
                 oldX, oldY = coord
                 print("Going to " + str(targetX) + ":" + str(targetY))
+            workie = False
+            print("Track Finish riches")
 
 
 def follow_target(target_id: int = None):
@@ -162,7 +164,7 @@ def follow_target(target_id: int = None):
                     pause = False
 
         target = scan_map(target_id)
-        targetAddr, targetID, targetX, targetY = target
+        targetAddr, targetID, targetX, targetY, direction, objHP = target
         move = False
         while not move:
             curX = mem.read_int(memProcess, cur_xAddr)
